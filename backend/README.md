@@ -1,4 +1,4 @@
-# Smart Classroom Watch - Backend API
+# Classroom Smart  Watch - Backend API
 
 ## Overview
 This is the backend server for the Smart Classroom Watch system. It provides RESTful APIs for mobile apps and web dashboards, handles real-time data processing, and manages the analytics engine.
