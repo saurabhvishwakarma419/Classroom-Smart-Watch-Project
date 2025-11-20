@@ -2,7 +2,7 @@
 
 The Smart Classroom Watch is packed with powerful, student-friendly, and educator-enhancing features designed to transform every aspect of classroom management.
 
-## 6.1 🚪 Automated Attendance Tracking
+##  🚪 Automated Attendance Tracking
 ### 📡 NFC/RFID-Based System
 
 Students simply walk into the classroom — the watch automatically connects to the receiver and marks attendance within seconds, with zero manual input.
