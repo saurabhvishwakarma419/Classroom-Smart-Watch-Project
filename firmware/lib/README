@@ -1,1 +1,132 @@
+This directory is intended for project specific (private) libraries.
+PlatformIO will compile them to static libraries and link into executable file.
 
+The source code of each library should be placed in a separate directory
+("lib/your_library_name/[here are source files]").
+
+For example, see a structure of the following two libraries `Foo` and `Bar`:
+
+|--lib
+|  |
+|  |--Bar
+|  |  |--docs
+|  |  |--examples
+|  |  |--src
+|  |     |- Bar.c
+|  |     |- Bar.h
+|  |  |- library.json (optional, custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
+|  |
+|  |--Foo
+|  |  |- Foo.c
+|  |  |- Foo.h
+|  |
+|  |- README --> THIS FILE
+|
+|- platformio.ini
+|--src
+   |- main.c
+
+and a contents of `src/main.c`:
+#include <Foo.h>
+#include <Bar.h>
+int main (void)
+{
+...
+}
+PlatformIO Library Dependency Finder will find automatically dependent
+libraries scanning project source files.
+
+More information about PlatformIO Library Dependency Finder
+- https://docs.platformio.org/page/librarymanager/ldf.html
+🚀 Quick Start Guide
+1. Install PlatformIO
+bash# Using PlatformIO CLI
+pip install platformio
+
+# Or use PlatformIO IDE extension in VS Code
+2. Hardware Setup
+Connect components according to pin configuration in config.h:
+
+All I2C devices share SDA (GPIO 21) and SCL (GPIO 22)
+Emergency button to GPIO 0
+Battery monitor to GPIO 34
+
+3. Configure WiFi
+Edit include/config.h:
+cpp#define WIFI_SSID "YourSchoolWiFi"
+#define WIFI_PASSWORD "YourPassword"
+#define API_SERVER "http://192.168.1.100:5000"
+4. Build and Upload
+bashcd firmware/
+pio run --target upload
+pio device monitor
+5. Test Functions
+
+Attendance: Place NFC tag near reader
+Emergency: Press and hold GPIO 0 button for 3 seconds
+Sensors: View serial monitor for real-time data
+Display: Stats update every second on OLED
+
+
+📊 Serial Monitor Output Example
+=== Smart Classroom Watch ===
+Initializing...
+Initializing NFC reader...
+Found chip PN532
+NFC reader initialized!
+Initializing sensors...
+Heart rate sensor initialized
+MPU6050 initialized
+Sensors initialization complete
+Connecting to WiFi: SchoolWiFi
+..........
+WiFi connected!
+IP Address: 192.168.1.50
+Device MAC: AA:BB:CC:DD:EE:FF
+Initialization complete!
+
+Heart Rate: 72 BPM | Steps: 4235 | Focus: 85.50
+Heart Rate: 73 BPM | Steps: 4237 | Focus: 86.20
+NFC Tag detected: A1B2C3D4
+Sending attendance data: {"studentId":"STU_2024_001","classId":"A1B2"...}
+POST to: http://192.168.1.100:5000/api/attendance/mark
+HTTP Response: 201
+Attendance marked successfully!
+
+⚙️ Configuration Options
+All configurable values are in include/config.h:
+SettingDefaultDescriptionWIFI_TIMEOUT20000WiFi connection timeout (ms)SENSOR_READ_INTERVAL2000Sensor reading frequency (ms)SLEEP_TIMEOUT120000Inactivity before sleep (ms)HEART_RATE_MIN50Minimum healthy heart rateHEART_RATE_MAX120Maximum healthy heart rateBATTERY_LOW_THRESHOLD20Low battery warning (%)
+
+🔧 Troubleshooting
+NFC Not Working
+
+Check I2C connections (SDA=21, SCL=22)
+Verify PN532 is in I2C mode (check DIP switches)
+Test with I2C scanner sketch
+
+WiFi Connection Fails
+
+Verify SSID and password in config.h
+Check 2.4GHz WiFi (ESP32 doesn't support 5GHz)
+Increase WIFI_TIMEOUT if network is slow
+
+Sensors Not Reading
+
+Check all I2C devices are on same bus
+Verify power supply (3.3V for sensors)
+Use I2C scanner to detect addresses
+
+Display Blank
+
+Verify OLED address (default 0x3C)
+Check contrast settings
+Ensure proper power connection
+
+
+📚 Additional Resources
+
+ESP32 Documentation
+PlatformIO Docs
+Adafruit PN532 Guide
+MAX30102 Datasheet
+MPU6050 Guide
